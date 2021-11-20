@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactLoading from 'react-loading';
 
-const ButtonLoading = ({ disabled, loading, text }) => {
+const ButtonLoading = ({ disabled=false, loading=false, text }) => {
   return (
     <button
       disabled={disabled}

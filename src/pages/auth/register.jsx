@@ -6,9 +6,14 @@ import ButtonLoading from 'components/ButtonLoading';
 import useFormData from 'hooks/useFormData';
 import { CREAR_USUARIO } from 'graphql/auth/mutation';
 import { useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
+import { useAuth } from 'context/authContext';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const { form, formData, updateFormData } = useFormData(null);
+  const { setToken } = useAuth();
+  let navigate = useNavigate();
 
   const [crearUser, { data: dataMutation, loading: loadingMutation, error: errorMutation }] =
     useMutation(CREAR_USUARIO);
@@ -19,14 +24,14 @@ const Register = () => {
   };
 
   useEffect(() => {
-    console.log('usr', dataMutation);
     if (dataMutation) {
       if (dataMutation.registro.error) {
         console.error('MOSTRAR MENSAJE DE ERROR AQUI');
       }
-      localStorage.setItem('token', dataMutation.registro.token);
+      setToken(dataMutation.registro.token);
+      navigate('/');
     }
-  }, [dataMutation]);
+  }, [dataMutation, setToken, navigate]);
 
   return (
     <div className='flex flex-col h-full w-full items-center justify-center'>
@@ -46,6 +51,10 @@ const Register = () => {
           text='Registrarme'
         />
       </form>
+      <span>¿Ya tienes una cuenta?</span>
+      <Link to='/auth/login'>
+        <span className='text-blue-700'>Inicia sesión</span>
+      </Link>
     </div>
   );
 };
