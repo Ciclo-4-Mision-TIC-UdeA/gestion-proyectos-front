@@ -12,6 +12,7 @@ import ButtonLoading from 'components/ButtonLoading';
 import { EDITAR_PROYECTO } from 'graphql/proyectos/mutations';
 import useFormData from 'hooks/useFormData';
 import PrivateComponent from 'components/PrivateComponent';
+import { Link } from 'react-router-dom';
 
 const AccordionStyled = styled((props) => <Accordion {...props} />)(({ theme }) => ({
   backgroundColor: '#919191',
@@ -34,7 +35,17 @@ const IndexProyectos = () => {
 
   if (queryData.Proyectos) {
     return (
-      <div className='p-10'>
+      <div className='p-10 flex flex-col'>
+        <div className='flex w-full items-center justify-center'>
+          <h1 className='text-2xl font-bold text-gray-900'>Lista de Proyectos</h1>
+        </div>
+        <PrivateComponent roleList={['ADMINISTRADOR', 'LIDER']}>
+          <div className='my-2 self-end'>
+            <button className='bg-indigo-500 text-gray-50 p-2 rounded-lg shadow-lg hover:bg-indigo-400'>
+              <Link to='/proyectos/nuevo'>Crear nuevo proyecto</Link>
+            </button>
+          </div>
+        </PrivateComponent>
         {queryData.Proyectos.map((proyecto) => {
           return <AccordionProyecto proyecto={proyecto} />;
         })}
