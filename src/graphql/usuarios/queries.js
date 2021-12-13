@@ -24,6 +24,7 @@ const GET_USUARIO = gql`
       estado
       identificacion
       rol
+      foto
     }
   }
 `;
