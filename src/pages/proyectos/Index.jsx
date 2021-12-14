@@ -25,12 +25,8 @@ import {
 
 import ReactLoading from 'react-loading';
 
-const IndexProyectos = function () {
+const IndexProyectos = () => {
   const { data: queryData, loading } = useQuery(PROYECTOS);
-
-  useEffect(() => {
-    console.log('datos proyecto', queryData);
-  }, [queryData]);
 
   if (loading) return <div>Cargando...</div>;
 
@@ -44,7 +40,10 @@ const IndexProyectos = function () {
         </div>
         <PrivateComponent roleList={['ADMINISTRADOR', 'LIDER']}>
           <div className='my-2 self-end'>
-            <button className='bg-indigo-500 text-gray-50 p-2 rounded-lg shadow-lg hover:bg-indigo-400'>
+            <button
+              type='button'
+              className='bg-indigo-500 text-gray-50 p-2 rounded-lg shadow-lg hover:bg-indigo-400'
+            >
               <Link to='/proyectos/nuevo'>Crear nuevo proyecto</Link>
             </button>
           </div>
@@ -59,7 +58,7 @@ const IndexProyectos = function () {
   return <></>;
 };
 
-const AccordionProyecto = function ({ proyecto }) {
+const AccordionProyecto = ({ proyecto }) => {
   const [showDialog, setShowDialog] = useState(false);
   return (
     <>
@@ -75,12 +74,14 @@ const AccordionProyecto = function ({ proyecto }) {
         </AccordionSummaryStyled>
         <AccordionDetailsStyled>
           <PrivateComponent roleList={['ADMINISTRADOR']}>
-            <i
-              className='mx-4 fas fa-pen text-yellow-600 hover:text-yellow-400'
+            <button
+              type='button'
               onClick={() => {
                 setShowDialog(true);
               }}
-            />
+            >
+              <i className='mx-4 fas fa-pen text-yellow-600 hover:text-yellow-400' />
+            </button>
           </PrivateComponent>
           <PrivateComponent roleList={['ESTUDIANTE']}>
             <InscripcionProyecto
@@ -115,10 +116,9 @@ const AccordionProyecto = function ({ proyecto }) {
   );
 };
 
-const FormEditProyecto = function ({ _id }) {
+const FormEditProyecto = ({ _id }) => {
   const { form, formData, updateFormData } = useFormData();
-  const [editarProyecto, { data: dataMutation, loading, error }] =
-    useMutation(EDITAR_PROYECTO);
+  const [editarProyecto, { loading }] = useMutation(EDITAR_PROYECTO);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -129,10 +129,6 @@ const FormEditProyecto = function ({ _id }) {
       },
     });
   };
-
-  useEffect(() => {
-    console.log('data mutation', dataMutation);
-  }, [dataMutation]);
 
   return (
     <div className='p-4'>
@@ -154,7 +150,7 @@ const FormEditProyecto = function ({ _id }) {
   );
 };
 
-const Objetivo = function ({ index, _id, idProyecto, tipo, descripcion }) {
+const Objetivo = ({ index, _id, idProyecto, tipo, descripcion }) => {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [
     eliminarObjetivo,
@@ -164,7 +160,6 @@ const Objetivo = function ({ index, _id, idProyecto, tipo, descripcion }) {
   });
 
   useEffect(() => {
-    console.log('eliminar objetivo:', dataMutationEliminar);
     if (dataMutationEliminar) {
       toast.success('objetivo eliminado satisfactoriamente');
     }
@@ -189,14 +184,12 @@ const Objetivo = function ({ index, _id, idProyecto, tipo, descripcion }) {
       <div>{descripcion}</div>
       <PrivateComponent roleList={['ADMINISTRADOR', 'LIDER']}>
         <div className='flex my-2'>
-          <i
-            onClick={() => setShowEditDialog(true)}
-            className='fas fa-pen mx-2 text-yellow-500 hover:text-yellow-200 cursor-pointer'
-          />
-          <i
-            onClick={ejecutarEliminacion}
-            className='fas fa-trash mx-2 text-red-500 hover:text-red-200 cursor-pointer'
-          />
+          <button onClick={() => setShowEditDialog(true)} type='button'>
+            <i className='fas fa-pen mx-2 text-yellow-500 hover:text-yellow-200 cursor-pointer' />
+          </button>
+          <button type='button' onClick={ejecutarEliminacion}>
+            <i className='fas fa-trash mx-2 text-red-500 hover:text-red-200 cursor-pointer' />
+          </button>
         </div>
         <Dialog open={showEditDialog} onClose={() => setShowEditDialog(false)}>
           <EditarObjetivo
@@ -212,13 +205,13 @@ const Objetivo = function ({ index, _id, idProyecto, tipo, descripcion }) {
   );
 };
 
-const EditarObjetivo = function ({
+const EditarObjetivo = ({
   descripcion,
   tipo,
   index,
   idProyecto,
   setShowEditDialog,
-}) {
+}) => {
   const { form, formData, updateFormData } = useFormData();
 
   const [editarObjetivo, { data: dataMutation, loading }] = useMutation(
@@ -243,9 +236,8 @@ const EditarObjetivo = function ({
         indexObjetivo: index,
         campos: formData,
       },
-    }).catch((e) => {
-      console.log(e);
-      toast.error('Error editando el objetivo');
+    }).catch((err) => {
+      toast.error('Error editando el objetivo', err);
     });
   };
   return (
@@ -275,10 +267,9 @@ const EditarObjetivo = function ({
   );
 };
 
-const InscripcionProyecto = function ({ idProyecto, estado, inscripciones }) {
+const InscripcionProyecto = ({ idProyecto, estado, inscripciones }) => {
   const [estadoInscripcion, setEstadoInscripcion] = useState('');
-  const [crearInscripcion, { data, loading, error }] =
-    useMutation(CREAR_INSCRIPCION);
+  const [crearInscripcion, { data, loading }] = useMutation(CREAR_INSCRIPCION);
   const { userData } = useUser();
 
   useEffect(() => {
@@ -294,7 +285,6 @@ const InscripcionProyecto = function ({ idProyecto, estado, inscripciones }) {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       toast.success('inscripcion creada con exito');
     }
   }, [data]);

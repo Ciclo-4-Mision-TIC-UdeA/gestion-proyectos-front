@@ -12,22 +12,18 @@ import { ObjContext, useObj } from 'context/objContext';
 
 import { CREAR_PROYECTO } from 'graphql/proyectos/mutations';
 
-const NuevoProyecto = function () {
+const NuevoProyecto = () => {
   const { form, formData, updateFormData } = useFormData();
   const [listaUsuarios, setListaUsuarios] = useState({});
-  const { data, loading, error } = useQuery(GET_USUARIOS, {
+  const { data, loading } = useQuery(GET_USUARIOS, {
     variables: {
       filtro: { rol: 'LIDER', estado: 'AUTORIZADO' },
     },
   });
 
-  const [
-    crearProyecto,
-    { data: mutationData, loading: mutationLoading, error: mutationError },
-  ] = useMutation(CREAR_PROYECTO);
+  const [crearProyecto] = useMutation(CREAR_PROYECTO);
 
   useEffect(() => {
-    console.log(data);
     if (data) {
       const lu = {};
       data.Usuarios.forEach((elemento) => {
@@ -37,10 +33,6 @@ const NuevoProyecto = function () {
       setListaUsuarios(lu);
     }
   }, [data]);
-
-  useEffect(() => {
-    console.log('data mutation', mutationData);
-  });
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -86,7 +78,7 @@ const NuevoProyecto = function () {
   );
 };
 
-const Objetivos = function () {
+const Objetivos = () => {
   const [listaObjetivos, setListaObjetivos] = useState([]);
   const [maxObjetivos, setMaxObjetivos] = useState(false);
 
@@ -112,15 +104,17 @@ const Objetivos = function () {
       <div>
         <span>Objetivos del Proyecto</span>
         {!maxObjetivos && (
-          <i
+          <button
+            type='button'
             onClick={() =>
               setListaObjetivos([
                 ...listaObjetivos,
                 componenteObjetivoAgregado(),
               ])
             }
-            className='fas fa-plus rounded-full bg-green-500 hover:bg-green-400 text-white p-2 mx-2 cursor-pointer'
-          />
+          >
+            <i className='fas fa-plus rounded-full bg-green-500 hover:bg-green-400 text-white p-2 mx-2 cursor-pointer' />
+          </button>
         )}
         {listaObjetivos.map((objetivo) => objetivo)}
       </div>
@@ -128,7 +122,7 @@ const Objetivos = function () {
   );
 };
 
-const FormObjetivo = function ({ id }) {
+const FormObjetivo = ({ id }) => {
   const { eliminarObjetivo } = useObj();
   return (
     <div className='flex items-center'>
@@ -144,10 +138,9 @@ const FormObjetivo = function ({ id }) {
         label='Tipo de Objetivo'
         required
       />
-      <i
-        onClick={() => eliminarObjetivo(id)}
-        className='fas fa-minus rounded-full bg-red-500 hover:bg-red-400 text-white p-2 mx-2 cursor-pointer mt-6'
-      />
+      <button type='button' onClick={() => eliminarObjetivo(id)}>
+        <i className='fas fa-minus rounded-full bg-red-500 hover:bg-red-400 text-white p-2 mx-2 cursor-pointer mt-6' />
+      </button>
     </div>
   );
 };

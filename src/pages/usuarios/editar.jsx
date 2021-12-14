@@ -10,7 +10,7 @@ import { EDITAR_USUARIO } from 'graphql/usuarios/mutations';
 import DropDown from 'components/Dropdown';
 import { Enum_EstadoUsuario } from 'utils/enums';
 
-const EditarUsuario = function () {
+const EditarUsuario = () => {
   const { form, formData, updateFormData } = useFormData(null);
   const { _id } = useParams();
 

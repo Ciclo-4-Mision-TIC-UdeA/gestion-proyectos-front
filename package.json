@@ -30,8 +30,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/components/** src/pages/**",
-    "lint:fix": "eslint --fix src/components/** src/pages/**"
+    "lint": "eslint src/components/** src/pages/** src/hooks/** src/layouts/** src/graphql/** src/utils/**",
+    "lint:fix": "eslint --fix src/components/** src/pages/** src/hooks/** src/layouts/** src/graphql/** src/utils/**"
   },
   "eslintConfig": {
     "extends": [
@@ -53,8 +53,8 @@
   },
   "devDependencies": {
     "autoprefixer": "^9",
-    "eslint": "^8.4.1",
-    "eslint-config-airbnb": "^19.0.2",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",

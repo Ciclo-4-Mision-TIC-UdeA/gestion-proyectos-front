@@ -9,20 +9,17 @@ import { useUser } from 'context/userContext';
 import { GET_USUARIO } from 'graphql/usuarios/queries';
 import { toast } from 'react-toastify';
 
-const Profile = function () {
+const Profile = () => {
   const [editFoto, setEditFoto] = useState(false);
   const { form, formData, updateFormData } = useFormData();
   const { userData, setUserData } = useUser();
 
-  const [
-    editarPerfil,
-    { data: dataMutation, error: errorMutation, loading: loadingMutation },
-  ] = useMutation(EDITAR_PERFIL);
+  const [editarPerfil, { data: dataMutation, loading: loadingMutation }] =
+    useMutation(EDITAR_PERFIL);
 
   const {
     data: queryData,
     loading: queryLoading,
-    error: queryError,
     refetch,
   } = useQuery(GET_USUARIO, {
     variables: {
@@ -32,23 +29,16 @@ const Profile = function () {
 
   useEffect(() => {
     if (dataMutation) {
-      console.log('data mutation', dataMutation);
       setUserData({ ...userData, foto: dataMutation.editarPerfil.foto });
       toast.success('Perfil modificado con exito');
       refetch();
     }
   }, [dataMutation]);
 
-  useEffect(() => {
-    console.log('ud', queryData);
-  }, [queryData]);
-
   const submitForm = async (e) => {
     e.preventDefault();
 
     const formUploaded = await uploadFormData(formData);
-
-    console.log('form cargado', formUploaded);
 
     editarPerfil({
       variables: {
@@ -93,6 +83,7 @@ const Profile = function () {
               alt='Foto Usuario'
             />
             <button
+              type='button'
               onClick={() => setEditFoto(true)}
               className='bg-indigo-300 p-1 my-2 rounded-md text-white'
             >
@@ -103,6 +94,7 @@ const Profile = function () {
           <div>
             <Input label='Foto' name='foto' type='file' required />
             <button
+              type='button'
               onClick={() => setEditFoto(false)}
               className='bg-indigo-300 p-1 my-2 rounded-md text-white'
             >
