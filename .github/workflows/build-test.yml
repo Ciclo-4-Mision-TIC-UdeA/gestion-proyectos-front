@@ -17,9 +17,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build
+      - name: Lint
         run: yarn lint
-    
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +35,6 @@ jobs:
       - name: Build
         run: yarn build
     needs: lint
-
 
   test:
     runs-on: ubuntu-latest
