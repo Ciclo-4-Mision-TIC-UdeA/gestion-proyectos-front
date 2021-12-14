@@ -36,23 +36,21 @@ const IndexUsuarios = () => {
           <tbody>
             {data && data.Usuarios ? (
               <>
-                {data.Usuarios.map((u) => {
-                  return (
-                    <tr key={u._id}>
-                      <td>{u.nombre}</td>
-                      <td>{u.apellido}</td>
-                      <td>{u.correo}</td>
-                      <td>{u.identificacion}</td>
-                      <td>{Enum_Rol[u.rol]}</td>
-                      <td>{Enum_EstadoUsuario[u.estado]}</td>
-                      <td>
-                        <Link to={`/usuarios/editar/${u._id}`}>
-                          <i className='fas fa-pen text-yellow-600 hover:text-yellow-400 cursor-pointer' />
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {data.Usuarios.map((u) => (
+                  <tr key={u._id}>
+                    <td>{u.nombre}</td>
+                    <td>{u.apellido}</td>
+                    <td>{u.correo}</td>
+                    <td>{u.identificacion}</td>
+                    <td>{Enum_Rol[u.rol]}</td>
+                    <td>{Enum_EstadoUsuario[u.estado]}</td>
+                    <td>
+                      <Link to={`/usuarios/editar/${u._id}`}>
+                        <i className='fas fa-pen text-yellow-600 hover:text-yellow-400 cursor-pointer' />
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
               </>
             ) : (
               <div>No autorizado</div>

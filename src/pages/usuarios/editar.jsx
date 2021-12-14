@@ -22,9 +22,10 @@ const EditarUsuario = () => {
     variables: { _id },
   });
 
-
-  const [editarUsuario, { data: mutationData, loading: mutationLoading, error: mutationError }] =
-    useMutation(EDITAR_USUARIO);
+  const [
+    editarUsuario,
+    { data: mutationData, loading: mutationLoading, error: mutationError },
+  ] = useMutation(EDITAR_USUARIO);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -57,7 +58,9 @@ const EditarUsuario = () => {
       <Link to='/usuarios'>
         <i className='fas fa-arrow-left text-gray-600 cursor-pointer font-bold text-xl hover:text-gray-900' />
       </Link>
-      <h1 className='m-4 text-3xl text-gray-800 font-bold text-center'>Editar Usuario</h1>
+      <h1 className='m-4 text-3xl text-gray-800 font-bold text-center'>
+        Editar Usuario
+      </h1>
       <form
         onSubmit={submitForm}
         onChange={updateFormData}
@@ -69,34 +72,34 @@ const EditarUsuario = () => {
           type='text'
           name='nombre'
           defaultValue={queryData.Usuario.nombre}
-          required={true}
+          required
         />
         <Input
           label='Apellido de la persona:'
           type='text'
           name='apellido'
           defaultValue={queryData.Usuario.apellido}
-          required={true}
+          required
         />
         <Input
           label='Correo de la persona:'
           type='email'
           name='correo'
           defaultValue={queryData.Usuario.correo}
-          required={true}
+          required
         />
         <Input
           label='Identificación de la persona:'
           type='text'
           name='identificacion'
           defaultValue={queryData.Usuario.identificacion}
-          required={true}
+          required
         />
         <DropDown
           label='Estado de la persona:'
           name='estado'
           defaultValue={queryData.Usuario.estado}
-          required={true}
+          required
           options={Enum_EstadoUsuario}
         />
         <span>Rol del usuario: {queryData.Usuario.rol}</span>

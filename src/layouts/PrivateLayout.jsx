@@ -1,20 +1,19 @@
 import Sidebar from 'components/Sidebar';
-import { Outlet } from 'react-router';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useMutation } from '@apollo/client';
 import { useAuth } from 'context/authContext';
 import { REFRESH_TOKEN } from 'graphql/auth/mutations';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import PrivateRoute from 'components/PrivateRoute';
 
 const PrivateLayout = () => {
   const navigate = useNavigate();
-  const { authToken, setToken } = useAuth();
+  const { setToken } = useAuth();
   const [loadingAuth, setLoadingAuth] = useState(true);
 
-  const [refreshToken, { data: dataMutation, loading: loadingMutation, error: errorMutation }] =
+  // falta captura de error de mutacion
+  const [refreshToken, { data: dataMutation, loading: loadingMutation }] =
     useMutation(REFRESH_TOKEN);
 
   useEffect(() => {
