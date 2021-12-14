@@ -20,7 +20,7 @@
       }
     ],
     "prefer-destructuring": "warn",
-    "react/jsx-filename-extension": [1, { "extensions": [".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".js"] }],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
