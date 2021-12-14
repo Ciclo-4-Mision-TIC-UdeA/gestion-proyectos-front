@@ -8,5 +8,5 @@ const Index = () => (
     <div className='bg-green-300 h-96'>Index page</div>
   </div>
 );
-
+console.log('hola');
 export default Index;
