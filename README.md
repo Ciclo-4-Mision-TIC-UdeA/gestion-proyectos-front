@@ -13,3 +13,5 @@ Paso 2: navegar hacia la carpeta e instalar dependencias
 Paso 3: ejecutar el proyecto
 
 `yarn start`
+
+[![CI_CD](https://github.com/Ciclo-4-Mision-TIC-UdeA/gestion-proyectos-front/actions/workflows/ci_cd.yml/badge.svg)](https://github.com/Ciclo-4-Mision-TIC-UdeA/gestion-proyectos-front/actions/workflows/ci_cd.yml)
