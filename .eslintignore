@@ -1,0 +1,7 @@
+node_modules/*
+build/*
+src/__test__/*
+src/styles/*
+yarn.lock
+craco.config.js
+public/*
