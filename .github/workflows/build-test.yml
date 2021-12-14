@@ -2,11 +2,7 @@ name: CICD
 
 on:
   push:
-    branches:
-      - dev
-      - test
-      - main
-      - cicd
+    branches: ['cicd']
 
 jobs:
   build:
