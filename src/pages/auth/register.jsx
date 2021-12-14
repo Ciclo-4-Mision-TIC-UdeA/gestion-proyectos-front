@@ -10,13 +10,15 @@ import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router';
 import { useAuth } from 'context/authContext';
 
-const Register = () => {
+const Register = function () {
   const { setToken } = useAuth();
   const navigate = useNavigate();
   const { form, formData, updateFormData } = useFormData();
 
-  const [registro, { data: dataMutation, loading: loadingMutation, error: errorMutation }] =
-    useMutation(REGISTRO);
+  const [
+    registro,
+    { data: dataMutation, loading: loadingMutation, error: errorMutation },
+  ] = useMutation(REGISTRO);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -35,12 +37,27 @@ const Register = () => {
   return (
     <div className='flex flex-col h-full w-full items-center justify-center'>
       <h1 className='text-3xl font-bold my-4'>Regístrate</h1>
-      <form className='flex flex-col' onSubmit={submitForm} onChange={updateFormData} ref={form}>
+      <form
+        className='flex flex-col'
+        onSubmit={submitForm}
+        onChange={updateFormData}
+        ref={form}
+      >
         <div className='grid grid-cols-2 gap-5'>
           <Input label='Nombre:' name='nombre' type='text' required />
           <Input label='Apellido:' name='apellido' type='text' required />
-          <Input label='Documento:' name='identificacion' type='text' required />
-          <DropDown label='Rol deseado:' name='rol' required={true} options={Enum_Rol} />
+          <Input
+            label='Documento:'
+            name='identificacion'
+            type='text'
+            required
+          />
+          <DropDown
+            label='Rol deseado:'
+            name='rol'
+            required
+            options={Enum_Rol}
+          />
           <Input label='Correo:' name='correo' type='email' required />
           <Input label='Contraseña:' name='password' type='password' required />
         </div>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from 'context/authContext';
-import PrivateComponent from './PrivateComponent';
 import { useUser } from 'context/userContext';
+import PrivateComponent from './PrivateComponent';
 
-const SidebarLinks = () => {
+const SidebarLinks = function () {
   return (
     <ul className='mt-12'>
       <SidebarRouteImagen to='/perfil' title='Perfil' icon='fas fa-user' />
@@ -12,9 +12,17 @@ const SidebarLinks = () => {
       <PrivateComponent roleList={['ADMINISTRADOR']}>
         <SidebarRoute to='/usuarios' title='Usuarios' icon='fas fa-user' />
       </PrivateComponent>
-      <SidebarRoute to='/proyectos' title='Proyectos' icon='fas fa-smile-wink' />
+      <SidebarRoute
+        to='/proyectos'
+        title='Proyectos'
+        icon='fas fa-smile-wink'
+      />
       <PrivateComponent roleList={['ADMINISTRADOR', 'LIDER']}>
-        <SidebarRoute to='/inscripciones' title='Aprobacion Inscripciones' icon='fas fa-users' />
+        <SidebarRoute
+          to='/inscripciones'
+          title='Aprobacion Inscripciones'
+          icon='fas fa-users'
+        />
       </PrivateComponent>
       <SidebarRoute to='/page2' title='Pagina2' icon='fas fa-smile-wink' />
       <SidebarRoute to='/category1' title='Catego 1' icon='fab fa-amazon' />
@@ -24,7 +32,7 @@ const SidebarLinks = () => {
   );
 };
 
-const Logout = () => {
+const Logout = function () {
   const { setToken } = useAuth();
   const deleteToken = () => {
     console.log('eliminar token');
@@ -42,16 +50,18 @@ const Logout = () => {
   );
 };
 
-const Logo = () => {
+const Logo = function () {
   return (
     <div className='py-3 w-full flex flex-col items-center justify-center'>
       <img src='logo.png' alt='Logo' className='h-16' />
-      <span className='my-2 text-xl font-bold text-center'>Título de Mi Aplicación</span>
+      <span className='my-2 text-xl font-bold text-center'>
+        Título de Mi Aplicación
+      </span>
     </div>
   );
 };
 
-const Sidebar = () => {
+const Sidebar = function () {
   const [open, setOpen] = useState(true);
   return (
     <div className='flex flex-col md:flex-row flex-no-wrap md:h-full'>
@@ -64,7 +74,10 @@ const Sidebar = () => {
         </div>
       </div>
       <div className='flex md:hidden w-full justify-between bg-gray-800 p-2 text-white'>
-        <i className={`fas fa-${open ? 'times' : 'bars'}`} onClick={() => setOpen(!open)} />
+        <i
+          className={`fas fa-${open ? 'times' : 'bars'}`}
+          onClick={() => setOpen(!open)}
+        />
         <i className='fas fa-home' />
       </div>
       {open && <ResponsiveSidebar />}
@@ -73,7 +86,7 @@ const Sidebar = () => {
   );
 };
 
-const ResponsiveSidebar = () => {
+const ResponsiveSidebar = function () {
   return (
     <div>
       <div
@@ -89,7 +102,7 @@ const ResponsiveSidebar = () => {
   );
 };
 
-const SidebarRoute = ({ to, title, icon }) => {
+const SidebarRoute = function ({ to, title, icon }) {
   return (
     <li>
       <NavLink
@@ -108,7 +121,7 @@ const SidebarRoute = ({ to, title, icon }) => {
     </li>
   );
 };
-const SidebarRouteImagen = ({ to, title, icon }) => {
+const SidebarRouteImagen = function ({ to, title, icon }) {
   const { userData } = useUser();
   return (
     <li>
@@ -122,7 +135,11 @@ const SidebarRouteImagen = ({ to, title, icon }) => {
       >
         <div className='flex items-center'>
           {userData.foto ? (
-            <img className='h-8 w-8 rounded-full' src={userData.foto} alt='foto' />
+            <img
+              className='h-8 w-8 rounded-full'
+              src={userData.foto}
+              alt='foto'
+            />
           ) : (
             <i className={icon} />
           )}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Input = ({ label, name, defaultValue, type, required }) => {
+const Input = function ({ label, name, defaultValue, type, required }) {
   return (
     <label htmlFor={name} className='flex flex-col my-3'>
       <span>{label}</span>

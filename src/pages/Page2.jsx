@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Page2 = () => {
+const Page2 = function () {
   return <div>Pagina 2</div>;
 };
 

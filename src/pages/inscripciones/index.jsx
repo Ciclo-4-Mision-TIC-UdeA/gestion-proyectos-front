@@ -11,7 +11,7 @@ import {
   AccordionDetailsStyled,
 } from 'components/Accordion';
 
-const IndexInscripciones = () => {
+const IndexInscripciones = function () {
   const { data, loading, error, refetch } = useQuery(GET_INSCRIPCIONES);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const IndexInscripciones = () => {
   );
 };
 
-const AccordionInscripcion = ({ data, titulo, refetch = () => {} }) => {
+const AccordionInscripcion = function ({ data, titulo, refetch = () => {} }) {
   return (
     <AccordionStyled>
       <AccordionSummaryStyled>
@@ -51,17 +51,18 @@ const AccordionInscripcion = ({ data, titulo, refetch = () => {} }) => {
       <AccordionDetailsStyled>
         <div className='flex'>
           {data &&
-            data.map((inscripcion) => {
-              return <Inscripcion inscripcion={inscripcion} refetch={refetch} />;
-            })}
+            data.map((inscripcion) => (
+              <Inscripcion inscripcion={inscripcion} refetch={refetch} />
+            ))}
         </div>
       </AccordionDetailsStyled>
     </AccordionStyled>
   );
 };
 
-const Inscripcion = ({ inscripcion, refetch }) => {
-  const [aprobarInscripcion, { data, loading, error }] = useMutation(APROBAR_INSCRIPCION);
+const Inscripcion = function ({ inscripcion, refetch }) {
+  const [aprobarInscripcion, { data, loading, error }] =
+    useMutation(APROBAR_INSCRIPCION);
 
   useEffect(() => {
     if (data) {

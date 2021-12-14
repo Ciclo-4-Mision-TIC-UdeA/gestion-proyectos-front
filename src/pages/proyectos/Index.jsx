@@ -4,9 +4,13 @@ import { PROYECTOS } from 'graphql/proyectos/queries';
 import DropDown from 'components/Dropdown';
 import Input from 'components/Input';
 import { Dialog } from '@mui/material';
-import { Enum_EstadoProyecto } from 'utils/enums';
+import { Enum_EstadoProyecto, Enum_TipoObjetivo } from 'utils/enums';
 import ButtonLoading from 'components/ButtonLoading';
-import { EDITAR_PROYECTO } from 'graphql/proyectos/mutations';
+import {
+  EDITAR_PROYECTO,
+  ELIMINAR_OBJETIVO,
+  EDITAR_OBJETIVO,
+} from 'graphql/proyectos/mutations';
 import useFormData from 'hooks/useFormData';
 import PrivateComponent from 'components/PrivateComponent';
 import { Link } from 'react-router-dom';
@@ -18,12 +22,10 @@ import {
   AccordionSummaryStyled,
   AccordionDetailsStyled,
 } from 'components/Accordion';
-import { ELIMINAR_OBJETIVO } from 'graphql/proyectos/mutations';
-import ReactLoading from 'react-loading';
-import { Enum_TipoObjetivo } from 'utils/enums';
-import { EDITAR_OBJETIVO } from 'graphql/proyectos/mutations';
 
-const IndexProyectos = () => {
+import ReactLoading from 'react-loading';
+
+const IndexProyectos = function () {
   const { data: queryData, loading } = useQuery(PROYECTOS);
 
   useEffect(() => {
@@ -36,7 +38,9 @@ const IndexProyectos = () => {
     return (
       <div className='p-10 flex flex-col'>
         <div className='flex w-full items-center justify-center'>
-          <h1 className='text-2xl font-bold text-gray-900'>Lista de Proyectos</h1>
+          <h1 className='text-2xl font-bold text-gray-900'>
+            Lista de Proyectos
+          </h1>
         </div>
         <PrivateComponent roleList={['ADMINISTRADOR', 'LIDER']}>
           <div className='my-2 self-end'>
@@ -45,9 +49,9 @@ const IndexProyectos = () => {
             </button>
           </div>
         </PrivateComponent>
-        {queryData.Proyectos.map((proyecto) => {
-          return <AccordionProyecto proyecto={proyecto} />;
-        })}
+        {queryData.Proyectos.map((proyecto) => (
+          <AccordionProyecto proyecto={proyecto} />
+        ))}
       </div>
     );
   }
@@ -55,12 +59,14 @@ const IndexProyectos = () => {
   return <></>;
 };
 
-const AccordionProyecto = ({ proyecto }) => {
+const AccordionProyecto = function ({ proyecto }) {
   const [showDialog, setShowDialog] = useState(false);
   return (
     <>
       <AccordionStyled>
-        <AccordionSummaryStyled expandIcon={<i className='fas fa-chevron-down' />}>
+        <AccordionSummaryStyled
+          expandIcon={<i className='fas fa-chevron-down' />}
+        >
           <div className='flex w-full justify-between'>
             <div className='uppercase font-bold text-gray-100 '>
               {proyecto.nombre} - {proyecto.estado}
@@ -85,17 +91,15 @@ const AccordionProyecto = ({ proyecto }) => {
           </PrivateComponent>
           <div>Liderado Por: {proyecto.lider.correo}</div>
           <div className='flex'>
-            {proyecto.objetivos.map((objetivo, index) => {
-              return (
-                <Objetivo
-                  index={index}
-                  _id={objetivo._id}
-                  idProyecto={proyecto._id}
-                  tipo={objetivo.tipo}
-                  descripcion={objetivo.descripcion}
-                />
-              );
-            })}
+            {proyecto.objetivos.map((objetivo, index) => (
+              <Objetivo
+                index={index}
+                _id={objetivo._id}
+                idProyecto={proyecto._id}
+                tipo={objetivo.tipo}
+                descripcion={objetivo.descripcion}
+              />
+            ))}
           </div>
         </AccordionDetailsStyled>
       </AccordionStyled>
@@ -111,9 +115,10 @@ const AccordionProyecto = ({ proyecto }) => {
   );
 };
 
-const FormEditProyecto = ({ _id }) => {
+const FormEditProyecto = function ({ _id }) {
   const { form, formData, updateFormData } = useFormData();
-  const [editarProyecto, { data: dataMutation, loading, error }] = useMutation(EDITAR_PROYECTO);
+  const [editarProyecto, { data: dataMutation, loading, error }] =
+    useMutation(EDITAR_PROYECTO);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -138,21 +143,25 @@ const FormEditProyecto = ({ _id }) => {
         onSubmit={submitForm}
         className='flex flex-col items-center'
       >
-        <DropDown label='Estado del Proyecto' name='estado' options={Enum_EstadoProyecto} />
+        <DropDown
+          label='Estado del Proyecto'
+          name='estado'
+          options={Enum_EstadoProyecto}
+        />
         <ButtonLoading disabled={false} loading={loading} text='Confirmar' />
       </form>
     </div>
   );
 };
 
-const Objetivo = ({ index, _id, idProyecto, tipo, descripcion }) => {
+const Objetivo = function ({ index, _id, idProyecto, tipo, descripcion }) {
   const [showEditDialog, setShowEditDialog] = useState(false);
-  const [eliminarObjetivo, { data: dataMutationEliminar, loading: eliminarLoading }] = useMutation(
-    ELIMINAR_OBJETIVO,
-    {
-      refetchQueries: [{ query: PROYECTOS }],
-    }
-  );
+  const [
+    eliminarObjetivo,
+    { data: dataMutationEliminar, loading: eliminarLoading },
+  ] = useMutation(ELIMINAR_OBJETIVO, {
+    refetchQueries: [{ query: PROYECTOS }],
+  });
 
   useEffect(() => {
     console.log('eliminar objetivo:', dataMutationEliminar);
@@ -166,7 +175,14 @@ const Objetivo = ({ index, _id, idProyecto, tipo, descripcion }) => {
   };
 
   if (eliminarLoading)
-    return <ReactLoading data-testid='loading-in-button' type='spin' height={100} width={100} />;
+    return (
+      <ReactLoading
+        data-testid='loading-in-button'
+        type='spin'
+        height={100}
+        width={100}
+      />
+    );
   return (
     <div className='mx-5 my-4 bg-gray-50 p-8 rounded-lg flex flex-col items-center justify-center shadow-xl'>
       <div className='text-lg font-bold'>{tipo}</div>
@@ -196,12 +212,21 @@ const Objetivo = ({ index, _id, idProyecto, tipo, descripcion }) => {
   );
 };
 
-const EditarObjetivo = ({ descripcion, tipo, index, idProyecto, setShowEditDialog }) => {
+const EditarObjetivo = function ({
+  descripcion,
+  tipo,
+  index,
+  idProyecto,
+  setShowEditDialog,
+}) {
   const { form, formData, updateFormData } = useFormData();
 
-  const [editarObjetivo, { data: dataMutation, loading }] = useMutation(EDITAR_OBJETIVO, {
-    refetchQueries: [{ query: PROYECTOS }],
-  });
+  const [editarObjetivo, { data: dataMutation, loading }] = useMutation(
+    EDITAR_OBJETIVO,
+    {
+      refetchQueries: [{ query: PROYECTOS }],
+    }
+  );
 
   useEffect(() => {
     if (dataMutation) {
@@ -230,14 +255,14 @@ const EditarObjetivo = ({ descripcion, tipo, index, idProyecto, setShowEditDialo
         <DropDown
           label='Tipo de Objetivo'
           name='tipo'
-          required={true}
+          required
           options={Enum_TipoObjetivo}
           defaultValue={tipo}
         />
         <Input
           label='Descripcion del objetivo'
           name='descripcion'
-          required={true}
+          required
           defaultValue={descripcion}
         />
         <ButtonLoading
@@ -250,14 +275,17 @@ const EditarObjetivo = ({ descripcion, tipo, index, idProyecto, setShowEditDialo
   );
 };
 
-const InscripcionProyecto = ({ idProyecto, estado, inscripciones }) => {
+const InscripcionProyecto = function ({ idProyecto, estado, inscripciones }) {
   const [estadoInscripcion, setEstadoInscripcion] = useState('');
-  const [crearInscripcion, { data, loading, error }] = useMutation(CREAR_INSCRIPCION);
+  const [crearInscripcion, { data, loading, error }] =
+    useMutation(CREAR_INSCRIPCION);
   const { userData } = useUser();
 
   useEffect(() => {
     if (userData && inscripciones) {
-      const flt = inscripciones.filter((el) => el.estudiante._id === userData._id);
+      const flt = inscripciones.filter(
+        (el) => el.estudiante._id === userData._id
+      );
       if (flt.length > 0) {
         setEstadoInscripcion(flt[0].estado);
       }
@@ -272,13 +300,17 @@ const InscripcionProyecto = ({ idProyecto, estado, inscripciones }) => {
   }, [data]);
 
   const confirmarInscripcion = () => {
-    crearInscripcion({ variables: { proyecto: idProyecto, estudiante: userData._id } });
+    crearInscripcion({
+      variables: { proyecto: idProyecto, estudiante: userData._id },
+    });
   };
 
   return (
     <>
       {estadoInscripcion !== '' ? (
-        <span>Ya estas inscrito en este proyecto y el estado es {estadoInscripcion}</span>
+        <span>
+          Ya estas inscrito en este proyecto y el estado es {estadoInscripcion}
+        </span>
       ) : (
         <ButtonLoading
           onClick={() => confirmarInscripcion()}
