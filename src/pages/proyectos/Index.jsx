@@ -303,9 +303,20 @@ const InscripcionProyecto = ({ idProyecto, estado, inscripciones }) => {
   return (
     <>
       {estadoInscripcion !== '' ? (
-        <span>
-          Ya estas inscrito en este proyecto y el estado es {estadoInscripcion}
-        </span>
+        <div className='flex flex-col items-start'>
+          <span>
+            Ya estas inscrito en este proyecto y el estado es{' '}
+            {estadoInscripcion}
+          </span>
+          {estadoInscripcion === 'ACEPTADO' && (
+            <Link
+              to={`/avances/${idProyecto}`}
+              className='bg-yellow-700 p-2 rounded-lg text-white my-2 hover:bg-yellow-500'
+            >
+              Agregar Avance
+            </Link>
+          )}
+        </div>
       ) : (
         <ButtonLoading
           onClick={() => confirmarInscripcion()}
