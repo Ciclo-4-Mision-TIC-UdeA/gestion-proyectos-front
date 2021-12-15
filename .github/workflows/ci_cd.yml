@@ -11,25 +11,6 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  lint:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
-
-      # installs dependencies
-      - name: Instalacion de dependencias
-        run: yarn install
-
-      # builds project
-      - name: Revisión estática
-        run: yarn lint
-
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -48,7 +29,6 @@ jobs:
       # builds project
       - name: Compilacion del proyecto
         run: yarn build
-    needs: [lint]
 
   test:
     # The type of runner that the job will run on
@@ -69,16 +49,3 @@ jobs:
       - name: Pruebas unitarias proyecto
         run: yarn test
     needs: [build]
-
-  heroku-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
-    needs: [test]

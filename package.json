@@ -30,8 +30,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .jsx,.js .",
-    "lint:fix": "eslint --ext .jsx,.js ."
+    "lint": "eslint src/components/** src/pages/**  src/context/** src/hooks/** src/layouts/** src/graphql/** src/utils/**",
+    "lint:fix": "eslint --fix src/components/** src/context/** src/pages/** src/hooks/** src/layouts/** src/graphql/** src/utils/**"
   },
   "eslintConfig": {
     "extends": [
