@@ -1,12 +1,12 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI_CD
+name: CI_CD_TEST
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: ['main', 'test', 'dev', 'hotfixes']
+    branches: ['test']
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -72,7 +72,7 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_app_name: ${{secrets.HEROKU_TEST_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
 
     needs: [test]

@@ -1,0 +1,36 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI_CD_DEV
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: ['dev']
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+
+      - name: Instalacion de dependencias
+        run: yarn install
+
+      - name: Revision de lint
+        run: yarn lint
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_DEV_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+
+    needs: [lint]
