@@ -1,3 +1,6 @@
+[![CI_CD](https://github.com/Ciclo-4-Mision-TIC-UdeA/gestion-proyectos-front/actions/workflows/ci_cd.yml/badge.svg)](https://github.com/Ciclo-4-Mision-TIC-UdeA/gestion-proyectos-front/actions/workflows/ci_cd.yml)
+
+
 # Boilerplate para el proyecto de Misión TIC - Ciclo 4 UdeA 2021
 
 ### ¿Cómo usar este proyecto?
