@@ -21,7 +21,7 @@ jobs:
       - name: Instalacion de dependencias
         run: yarn install
 
-      - name: Revision de estilo
+      - name: Revision de lint
         run: yarn lint
 
   # This workflow contains a single job called "build"
@@ -43,6 +43,7 @@ jobs:
       # builds project
       - name: Compilacion del proyecto
         run: yarn build
+    needs: [lint]
 
   test:
     # The type of runner that the job will run on
