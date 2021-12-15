@@ -10,6 +10,20 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+
+      - name: Instalacion de dependencias
+        run: yarn install
+
+      - name: Revision de estilo
+        run: yarn lint
+
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
