@@ -3,7 +3,6 @@ import PrivateRoute from 'components/PrivateRoute';
 import { render, screen } from '@testing-library/react';
 import { UserContext } from 'context/userContext';
 
-
 it('renders not authorized if the roles dont match', () => {
   render(
     <UserContext.Provider value={{ userData: { rol: 'LIDER' } }}>

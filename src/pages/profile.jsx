@@ -50,11 +50,13 @@ const Profile = () => {
     });
   };
 
-  if (queryLoading) return <div>Loading...</div>;
+  if (queryLoading) return <div data-testid='loading'>Loading...</div>;
 
   return (
     <div className='p-10 flex flex-col items-center justify-center w-full'>
-      <h1 className='font-bold text-2xl text-gray-900'>Perfil del usuario</h1>
+      <h1 className='font-bold text-2xl text-gray-900' data-testid='perfil'>
+        Perfil del usuario
+      </h1>
       <form ref={form} onChange={updateFormData} onSubmit={submitForm}>
         <Input
           defaultValue={queryData.Usuario.nombre}
@@ -105,6 +107,7 @@ const Profile = () => {
           </div>
         )}
         <ButtonLoading
+          data-testid='buttonLoading'
           text='Confirmar'
           loading={loadingMutation}
           disabled={false}

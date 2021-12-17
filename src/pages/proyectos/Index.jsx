@@ -83,7 +83,7 @@ const AccordionProyecto = ({ proyecto }) => {
               <i className='mx-4 fas fa-pen text-yellow-600 hover:text-yellow-400' />
             </button>
           </PrivateComponent>
-          <PrivateComponent roleList={['ESTUDIANTE']}>
+          <PrivateComponent roleList={['LIDER', 'ESTUDIANTE']}>
             <InscripcionProyecto
               idProyecto={proyecto._id}
               estado={proyecto.estado}
@@ -313,7 +313,7 @@ const InscripcionProyecto = ({ idProyecto, estado, inscripciones }) => {
               to={`/avances/${idProyecto}`}
               className='bg-yellow-700 p-2 rounded-lg text-white my-2 hover:bg-yellow-500'
             >
-              Agregar Avance
+              Visualizar Avances
             </Link>
           )}
         </div>
