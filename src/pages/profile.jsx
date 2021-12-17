@@ -58,12 +58,14 @@ const Profile = () => {
         Perfil del usuario
       </h1>
       <form ref={form} onChange={updateFormData} onSubmit={submitForm}>
+        <input placeholder='nombre' name='name' data-testid='name-input' />
         <Input
           defaultValue={queryData.Usuario.nombre}
           label='Nombre'
           name='nombre'
           type='text'
           required
+          aria-label='input-nombre'
         />
         <Input
           defaultValue={queryData.Usuario.apellido}

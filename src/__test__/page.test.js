@@ -5,7 +5,13 @@ import {
   InMemoryCache,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  getByText,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import { UserContext } from 'context/userContext';
 import Profile from 'pages/profile';
 
@@ -52,5 +58,19 @@ it('fetches info from backend', async () => {
     );
   });
 
-  expect(screen.getByTestId('button-loading')).toHaveTextContent('Confirmar');
+  const input = screen.getByTestId('name-input');
+
+  fireEvent.change(input, { target: { value: 'Daniel' } });
+
+  //   expect(input.value).toBe('Daniel');
+
+  //   const boton = screen.getByTestId('button-loading');
+  //   expect(boton).toHaveTextContent('Confirmar');
+
+  //   fireEvent.click(boton);
+
+  //   await waitFor(() => {
+  //     const toast = getByText();
+  //     expect(toast).toBeInTheDocument();
+  //   });
 });
